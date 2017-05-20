@@ -6,28 +6,35 @@ DTB_FILE := $(addprefix $(KERNEL_OUT)/arch/arm/boot/,$(patsubst %.dts,%.dtb,$(ca
 ZIMG_FILE = $(addprefix $(KERNEL_OUT)/arch/arm/boot/,$(patsubst %.dts,%-zImage,$(call CM_DTS_FILE,$(1))))
 KERNEL_ZIMG = $(KERNEL_OUT)/arch/arm/boot/zImage
 
-@echo -e "CM_DTB_FILES: "$(CM_DTB_FILES)
-@echo -e "CM_DTS_FILE: "$(CM_DTS_FILE)
-@echo -e "DTB_FILE: "$(DTB_FILE)
-@echo -e "ZIMG_FILE: "$(ZIMG_FILE)
-@echo -e "KERNEL_ZIMG: "$(KERNEL_ZIMG)
-
 define append-cm-dtb
 mkdir -p $(KERNEL_OUT)/arch/arm/boot;\
 $(foreach d, $(CM_DTB_FILES), \
     cat $(KERNEL_ZIMG) $(call DTB_FILE,$(d)) > $(call ZIMG_FILE,$(d));)
 endef
 
-
 ## Build and run dtbtool
 DTBTOOL := $(HOST_OUT_EXECUTABLES)/dtbToolCM$(HOST_EXECUTABLE_SUFFIX)
 INSTALLED_DTIMAGE_TARGET := $(PRODUCT_OUT)/dt.img
 
+DTB_PATH = $(KERNEL_OUT)/arch/arm/boot/
+
+ifeq ($(TARGET_USE_SINGLE_DTB), true)
+DTB_PATH = $(KERNEL_OUT)/arch/arm/boot/dtb/
+# we need to copy our single dtb to an empty directory
+define copy-dtb
+mkdir -p $(DTB_PATH)
+cp -f $(KERNEL_OUT)/arch/arm/boot/dts/$(TARGET_SINGLE_DTB) $(DTB_PATH)
+endef
+endif
+
 $(INSTALLED_DTIMAGE_TARGET): $(DTBTOOL) $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr $(INSTALLED_KERNEL_TARGET)
 	@echo -e ${CL_CYN}"Start DT image: $@"${CL_RST}
 	$(call append-cm-dtb)
+ifeq ($(TARGET_USE_SINGLE_DTB), true)
+	$(call copy-dtb)
+endif
 	$(call pretty,"Target dt image: $(INSTALLED_DTIMAGE_TARGET)")
-	$(DTBTOOL) -2 -o $(INSTALLED_DTIMAGE_TARGET) -s $(BOARD_KERNEL_PAGESIZE) -p $(KERNEL_OUT)/scripts/dtc/ $(KERNEL_OUT)/arch/arm/boot/dts/
+	$(DTBTOOL) -2 -o $(INSTALLED_DTIMAGE_TARGET) -s $(BOARD_KERNEL_PAGESIZE) -p $(KERNEL_OUT)/scripts/dtc/ $(DTB_PATH)
 	@echo -e ${CL_CYN}"Made DT image: $@"${CL_RST}
 
 
