@@ -16,7 +16,7 @@ endef
 DTBTOOL := $(HOST_OUT_EXECUTABLES)/dtbToolCM$(HOST_EXECUTABLE_SUFFIX)
 INSTALLED_DTIMAGE_TARGET := $(PRODUCT_OUT)/dt.img
 
-DTB_PATH = $(KERNEL_OUT)/arch/arm/boot/
+DTB_PATH = $(KERNEL_OUT)/arch/arm/boot/dts/
 
 ifeq ($(TARGET_USE_SINGLE_DTB), true)
 DTB_PATH = $(KERNEL_OUT)/arch/arm/boot/dtb/
