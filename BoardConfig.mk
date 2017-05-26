@@ -14,7 +14,7 @@ TARGET_COMPILE_WITH_MSM_KERNEL := true
 TARGET_HAS_QC_KERNEL_SOURCE := true
 
 # trim the default dt.img to make boot smaller
-TARGET_USE_SINGLE_DTB := false
+TARGET_USE_SINGLE_DTB := true
 TARGET_SINGLE_DTB := msm8974pro-ab-pm8941-mtp.dtb
 
 # qcom hardware
