@@ -55,7 +55,7 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 
 TARGET_HARDWARE_3D := false
 TARGET_BOARD_PLATFORM := msm8974
-TARGET_BOOTLOADER_BOARD_NAME := FP2 
+TARGET_BOOTLOADER_BOARD_NAME := FP2
 
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 2048
@@ -78,7 +78,7 @@ TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
 
-BOARD_KERNEL_CMDLINE := initcall_debug=1 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3b7 ehci-hcd.park=3 androidboot.bootdevice=msm_sdcc.1
+BOARD_KERNEL_CMDLINE := initcall_debug=1 androidboot.hardware=qcom console=ttyMSM0,115200n8 user_debug=31 msm_rtb.filter=0x3b7 ehci-hcd.park=3 androidboot.bootdevice=msm_sdcc.1
 BOARD_KERNEL_SEPARATED_DT := true
 
 BOARD_CUSTOM_BOOTIMG_MK := device/fairphone/FP2/mkbootimg-test.mk
