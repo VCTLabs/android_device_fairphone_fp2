@@ -28,7 +28,7 @@ BOARD_HAS_QCOM_WLAN := true
 #TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 #TODO: Fix-me: Setting TARGET_HAVE_HDMI_OUT to false
 # to get rid of compilation error.
-TARGET_HAVE_HDMI_OUT := false
+TARGET_HAVE_HDMI_OUT := true
 TARGET_USES_OVERLAY := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_NO_BOOTLOADER := true
@@ -78,7 +78,7 @@ TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
 
-BOARD_KERNEL_CMDLINE := initcall_debug=1 androidboot.hardware=qcom console=ttyMSM0,115200n8 user_debug=31 msm_rtb.filter=0x3b7 ehci-hcd.park=3 androidboot.bootdevice=msm_sdcc.1
+BOARD_KERNEL_CMDLINE := initcall_debug=1 androidboot.hardware=qcom kgdboc=ttyHSL0,115200 kgdbwait console=ttyHLS0,115200n8 user_debug=31 msm_rtb.filter=0x3b7 ehci-hcd.park=3 androidboot.bootdevice=msm_sdcc.1
 BOARD_KERNEL_SEPARATED_DT := true
 
 BOARD_CUSTOM_BOOTIMG_MK := device/fairphone/FP2/mkbootimg-test.mk
